@@ -1,25 +1,22 @@
-CXX ?= g++
-CXXFLAGS = -std=c++17 -O2 -Wall -Wextra -Wpedantic
+PYTHON ?= python3
 
-PROGRAM_NAME = segment_tree
+PROGRAM_NAME = segmentTree.py
 
-all: $(PROGRAM_NAME)
+all:
+	@echo "Python program ready"
 
-$(PROGRAM_NAME): segmentTree.cpp
-	$(CXX) $(CXXFLAGS) segmentTree.cpp -o $(PROGRAM_NAME)
-
-run: $(PROGRAM_NAME)
-	./$(PROGRAM_NAME)
+run:
+	$(PYTHON) $(PROGRAM_NAME)
 
 # Runs all tests/testN.in through the binary and diffs against tests/testN.expected.
 # Exits with a clear PASS / FAIL per test case.
-test: $(PROGRAM_NAME)
+test:
 	@PASS=0; FAIL=0; \
 	for input in ../io/sample.in.*; do \
 		base=$$(basename $$input .in); \
 		num=$$(echo $$input | grep -o '[0-9]*$$'); \
 		expected=../io/sample.out.$$num; \
-		actual=$$(./$(PROGRAM_NAME) < $$input); \
+		actual=$$($(PYTHON) $(PROGRAM_NAME) < $$input); \
 		if [ "$$actual" = "$$(cat $$expected)" ]; then \
 			echo "[PASS] $$base"; \
 			PASS=$$((PASS + 1)); \
@@ -34,4 +31,4 @@ test: $(PROGRAM_NAME)
 	echo "Results: $$PASS passed, $$FAIL failed"
 
 clean:
-	rm -f $(PROGRAM_NAME)
+	@echo "Nothing to clean for Python"
